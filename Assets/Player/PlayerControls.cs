@@ -6,7 +6,7 @@ public class PlayerControls : MonoBehaviour
     public Transform cameraTransform;
     public float mouseSens = 2f;
     private float xRotation = 0f;
-    public float gravity = -9.81f;
+    //public float gravity = -9.81f;
     public Vector3 velocity;
     public float playerSpeed = 5f;
 
@@ -36,8 +36,8 @@ public class PlayerControls : MonoBehaviour
         charCtrl.Move(moveDir * playerSpeed * Time.deltaTime);
 
         //Gravity
-        velocity.y += gravity * Time.deltaTime;
-        charCtrl.Move(velocity *Time.deltaTime);
+        //velocity.y += gravity * Time.deltaTime;
+        //charCtrl.Move(velocity *Time.deltaTime);
 
         //Check if ball thrown
         ThrowBall();
