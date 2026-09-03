@@ -4,6 +4,7 @@ public class Throw : MonoBehaviour
 {
     public GameObject player;
     public Transform holdPosition;
+    [SerializeField] GameObject cam;
 
     public float throwForce = 500f;
     public float pickUpRange = 5f;
@@ -11,18 +12,23 @@ public class Throw : MonoBehaviour
     private GameObject heldObj;
     private Rigidbody heldObjRb;
 
+
+
+    [Header("Debug")]
+    Ray debugRay;
     //private int LayerNumber;
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if(heldObj == null)
+            if (heldObj == null)
             {
                 RaycastHit hit;
-                if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, pickUpRange))
+                if(Physics.Raycast(cam.transform.position, cam.transform.forward , out hit, pickUpRange))
                 {
-                    if(hit.transform.gameObject.tag == "CanInteract")
+                    debugRay = new Ray(transform.position, cam.transform.forward);
+                    if (hit.transform.gameObject.tag == "CanInteract")
                     {
                         PickUpObject(hit.transform.gameObject);
                     }
@@ -57,7 +63,7 @@ public class Throw : MonoBehaviour
             heldObj = pickedUpObj;
             heldObjRb = pickedUpObj.GetComponent<Rigidbody>();
             heldObjRb.isKinematic = true;
-            heldObjRb.transform.parent = holdPosition.transform;
+            heldObjRb.transform.position = holdPosition.transform.position;
 
             Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), true);
         }
@@ -67,7 +73,7 @@ public class Throw : MonoBehaviour
     {
         Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
         heldObjRb.isKinematic = false;
-        heldObj.transform.parent = null;
+        //heldObj.transform.parent = null;
         heldObj = null; 
     }
 
@@ -80,7 +86,7 @@ public class Throw : MonoBehaviour
     {
         Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
         heldObjRb.isKinematic = false;
-        heldObj.transform.parent = null;
+        //heldObj.transform.parent = null;
         heldObjRb.AddForce(transform.forward * throwForce);
         heldObj = null;
     }
@@ -97,5 +103,8 @@ public class Throw : MonoBehaviour
         }
     }
 
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(debugRay);
+    }
 }
