@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Throw : MonoBehaviour
 {
+    public GameManager gm;
     public GameObject player;
     public Transform holdPosition;
     [SerializeField] GameObject cam;
@@ -89,6 +90,8 @@ public class Throw : MonoBehaviour
         //heldObj.transform.parent = null;
         heldObjRb.AddForce(transform.forward * throwForce);
         heldObj = null;
+
+        gm.totalBallsThrown += 1;
     }
 
     void StopClipping()
