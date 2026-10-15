@@ -88,7 +88,7 @@ public class Throw : MonoBehaviour
         Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
         heldObjRb.isKinematic = false;
         //heldObj.transform.parent = null;
-        heldObjRb.AddForce(transform.forward * throwForce);
+        heldObjRb.AddForce(cam.transform.forward * throwForce);
         heldObj = null;
 
         gm.totalBallsThrown += 1;

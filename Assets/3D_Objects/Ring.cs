@@ -5,6 +5,7 @@ public class Ring : MonoBehaviour
 {
     public GameManager gm;
     [SerializeField] private Material newMaterial;
+    [SerializeField] private Material oldMaterial;
     public bool scoreMade = false;
 
     public Transform objectToMove;
@@ -19,7 +20,9 @@ public class Ring : MonoBehaviour
     public float moveTime = 1f;
     private float elapsedTime;
     private bool isMoving = false;
-    private bool transition1Complete = false;
+    public bool transition1Complete = false;
+    private bool transition1Started = false;
+
     private bool transition2Complete = false;
     private bool transition3Complete = false;
 
@@ -43,18 +46,21 @@ public class Ring : MonoBehaviour
                 objectToMove.rotation = targetRotation;
                 isMoving = false;
                 transition1Complete = true;
+                ResetColor();
             }
         }
 
 
-        if (gm.level == 2 && transition1Complete == false)
+        if (gm.level == 2 && transition1Complete == false && transition1Started == false)
         {
+            transition1Started = true;
+
             //moveto func
-            if(ring == 1) { MoveTo(new Vector3(-0.47f, 6.73f, 16.02f), Quaternion.Euler(-87.795f, 0f, 0f)); }
-            if(ring == 2) { MoveTo(new Vector3(- 5.6f, 1.59f, 13.69f), Quaternion.Euler(15.944f, -6.564f, -49.14f)); }
-            if(ring == 3) { MoveTo(new Vector3(3.55f, 2.2f, 18.64f), Quaternion.Euler(0f, 0f, -42.114f)); }
-            if(ring == 4) { MoveTo(new Vector3(-2.74f, 2.78f, 19.22f), Quaternion.Euler(-2.383f, -37.893f, 51.24f)); }
-            if(ring == 5) { MoveTo(new Vector3(1.61f, 3.48f, 11.81f), Quaternion.Euler(-117.437f, 0f, 0f)); }
+            if(ring == 1) { MoveTo(new Vector3(-0.18f, 12f, -0.47f), Quaternion.Euler(-87.795f, 0f, 0f)); }
+            if(ring == 2) { MoveTo(new Vector3(-3.73f, 9f, -4.5f), Quaternion.Euler(15.944f, -6.564f, -49.14f)); }
+            if(ring == 3) { MoveTo(new Vector3(4.26f, 8f, 3.62f), Quaternion.Euler(0f, 0f, -42.114f)); }
+            if(ring == 4) { MoveTo(new Vector3(3.69f, 10f, -3.13f), Quaternion.Euler(-2.383f, -37.893f, 51.24f)); }
+            if(ring == 5) { MoveTo(new Vector3(-3.01f, 9f, 3.56f), Quaternion.Euler(-117.437f, 0f, 0f)); }
             
         }
     }
@@ -86,5 +92,14 @@ public class Ring : MonoBehaviour
 
         elapsedTime = 0f;
         isMoving = true;
+    }
+
+    public void ResetColor()
+    {
+        MeshRenderer mr = GetComponent<MeshRenderer>();
+        if (mr != null)
+        {
+            mr.material = oldMaterial;
+        }
     }
 }

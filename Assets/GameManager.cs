@@ -45,14 +45,14 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                level = 0;//end of game
+                level = 1;//end of game
             }
         }
     }
 
     void PlayLevel2()
     {
-
+        ResetRings();
     }
     void PlayLevel3()
     {
@@ -63,4 +63,14 @@ public class GameManager : MonoBehaviour
 
     }
 
+
+    void ResetRings()
+    {
+        ringsScored = 0;
+
+        for (int i = 0; i < rings.Length; i++)
+        {
+            rings[i].scoreMade = false;
+        }
+    }
 }
